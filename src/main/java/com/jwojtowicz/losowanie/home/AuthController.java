@@ -28,6 +28,7 @@ public class AuthController {
         String user = SecurityContextHolder.getContext().getAuthentication()
                 .getName();
         Optional<String> receiverForGiver = pairService.findReceiverForGiver(user);
+        String message = receiverForGiver.map(s -> "W tym roku robisz prezent dla:" + s).orElse("Losowania jeszcze nie bylo");
         return "index";
     }
 

@@ -36,8 +36,9 @@ public class AuthController {
 
     @GetMapping("/index")
     public String losowanie(Model model) {
-        String user = SecurityContextHolder.getContext().getAuthentication()
-                .getName();
+//        String user = SecurityContextHolder.getContext().getAuthentication()
+//                .getName();
+        String user = "Jacek";
         Optional<String> receiverForGiver = pairService.findReceiverForGiver(user);
         String message = receiverForGiver.map(s -> "W tym roku robisz prezent dla:" + s).orElse("Losowania jeszcze nie bylo");
         model.addAttribute("message", message);

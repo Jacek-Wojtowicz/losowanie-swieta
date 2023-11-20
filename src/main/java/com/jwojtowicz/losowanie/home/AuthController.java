@@ -24,7 +24,9 @@ public class AuthController {
     private UserService service;
 
     @GetMapping("/index")
-    public String home() {
+    public String home(Model model) {
+        String user = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
         return "index";
     }
 

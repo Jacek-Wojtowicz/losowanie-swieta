@@ -23,10 +23,10 @@ public class AuthController {
     private final PairService pairService;
     private UserService service;
 
-//    @GetMapping("/index")
-//    public String home() {
-//        return "index";
-//    }
+    @GetMapping("/index")
+    public String home() {
+        return "index";
+    }
 
     // handler method to handle login request
     @GetMapping("/login")
@@ -34,15 +34,14 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/index")
+    @GetMapping("/losowanie")
     public String losowanie(Model model) {
-//        String user = SecurityContextHolder.getContext().getAuthentication()
-//                .getName();
-//        String user = "Jacek";
-//        Optional<String> receiverForGiver = pairService.findReceiverForGiver(user);
-//        String message = receiverForGiver.map(s -> "W tym roku robisz prezent dla:" + s).orElse("Losowania jeszcze nie bylo");
-//        model.addAttribute("message", message);
-        return "/index";
+        String user = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        Optional<String> receiverForGiver = pairService.findReceiverForGiver(user);
+        String message = receiverForGiver.map(s -> "W tym roku robisz prezent dla:" + s).orElse("Losowania jeszcze nie bylo");
+        model.addAttribute("message", message);
+        return "/losowanie";
     }
 
     @GetMapping("/register")

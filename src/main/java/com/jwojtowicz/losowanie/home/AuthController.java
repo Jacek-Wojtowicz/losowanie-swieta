@@ -29,6 +29,7 @@ public class AuthController {
                 .getName();
         Optional<String> receiverForGiver = pairService.findReceiverForGiver(user);
         String message = receiverForGiver.map(s -> "W tym roku robisz prezent dla:" + s).orElse("Losowania jeszcze nie bylo");
+        model.addAttribute("message", message);
         return "index";
     }
 

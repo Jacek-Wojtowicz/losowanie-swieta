@@ -27,6 +27,7 @@ public class AuthController {
     public String home(Model model) {
         String user = SecurityContextHolder.getContext().getAuthentication()
                 .getName();
+        Optional<String> receiverForGiver = pairService.findReceiverForGiver(user);
         return "index";
     }
 

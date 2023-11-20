@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+    <link crossorigin="anonymous"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/index}">Registration and Login System</a>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a aria-current="page" class="nav-link active" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row col-md-10">
+        <h2>Losowanie</h2>
+    </div>
+    <div class="container-fluid">
+        <div class="row col-md-10 m-3">
+            <form th:action="@{/admin/draw}" method="get" class="text-center">
+                <button type="submit" class="btn btn-primary">LOSUJ</button>
+            </form>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Draw name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.drawName}"></td>
+            <td>
+                <!-- Przycisk do operacji Delete -->
+                <form th:action="@{/admin/user/{id}(id=${user.id})}" th:method="delete">
+                    <input name="_method" type="hidden" value="delete"/>
+                    <button type="submit">Delete</button>
+                </form>
+
+                <!-- Forma do operacji Update -->
+                <form th:action="@{/admin/user/drawname/{id}(id=${user.id})}" th:method="put">
+                    <input name="_method" type="hidden" value="put"/>
+                    <input name="drawName" placeholder="Enter new value" type="text"/>
+                    <button type="submit">Update</button>
+                </form>
+
+                <form th:action="@{/admin/user/password/{id}(id=${user.id})}" th:method="put">
+                    <input name="_method" type="hidden" value="put"/>
+                    <input name="password" placeholder="Enter new value" type="text"/>
+                    <button type="submit">Haslo</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!--    -->
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>Giver</th>
+            <th>Receiver</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pair : ${pairs}">
+            <td th:text="${pair.giver}"></td>
+            <td th:text="${pair.receiver}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

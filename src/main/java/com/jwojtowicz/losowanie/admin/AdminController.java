@@ -60,4 +60,9 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/delete")
+    public String delete(Model model) {
+        pairService.delete();
+        return "redirect:/admin";
+    }
 }

@@ -39,20 +39,29 @@ public class PairService {
     private List<PairDTO> drawPairs(List<User> dbUsers) {
         List<User> users = new ArrayList<>(dbUsers);
         Collections.shuffle(users);
-        PairDTO juliaToLukasz = new PairDTO("Julia", "Lukasz");
-        PairDTO lukaszToJulia = new PairDTO("Lukasz", "Julia");
-        users.removeIf(u -> u.getDrawName().equalsIgnoreCase("lukasz") || u.getDrawName().equalsIgnoreCase("julia"));
 
         List<PairDTO> pairs = new ArrayList<>();
-        pairs.add(juliaToLukasz);
-        pairs.add(lukaszToJulia);
+        List<String> list = users.stream().map(User::getDrawName).map(String::toLowerCase).toList();
+        if (list.contains("lukasz") || list.contains("julia")) {
+            PairDTO lukaszToJulia = new PairDTO("Lukasz", "Julia");
+            PairDTO juliaToLukasz = new PairDTO("Julia", "Lukasz");
+            pairs.add(juliaToLukasz);
+            pairs.add(lukaszToJulia);
+        }
+
+        users.removeIf(u -> u.getDrawName().equalsIgnoreCase("lukasz") || u.getDrawName().equalsIgnoreCase("julia"));
         for (int i = 0; i < users.size(); i++) {
             String giver = users.get(i).getDrawName();
-            String receiver = users.get((i + 1) % users.size()).getDrawName(); // Zapewnienie, że każda osoba jest giverem i receiverem
+            String receiver = users.get((i + 1) % users.size())
+                    .getDrawName(); // Zapewnienie, że każda osoba jest giverem i receiverem
             PairDTO para = new PairDTO(giver, receiver);
             pairs.add(para);
         }
 
         return pairs;
+    }
+
+    public void delete() {
+        repository.deleteAll();
     }
 }

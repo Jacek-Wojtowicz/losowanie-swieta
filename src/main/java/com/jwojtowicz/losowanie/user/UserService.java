@@ -53,7 +53,8 @@ public class UserService implements UserDetailsService {
         User user = repository.findUserByNameIgnoreCase(username);
         List<SimpleGrantedAuthority> permissions =
                 user.getName().equalsIgnoreCase("Jacek") || user.getName().equalsIgnoreCase("admin") ? List.of(
-                        new SimpleGrantedAuthority("ROLE_ADMIN")) : List.of();
+                        new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"))
+                        : List.of(new SimpleGrantedAuthority("ROLE_USER"));
         return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), permissions);
     }
 
